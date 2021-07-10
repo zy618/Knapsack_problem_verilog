@@ -25,9 +25,11 @@ module UART_MEM(
     input rst,      // BTNU 
     input mem2uart, // SW0     
     /*---------------------------MEM--------------------------------*/
-    input reverse,
+    input [6:0] num,
     output reg recv_done,   // led 0 
-    output reg send_done,   // led 1     
+    output reg send_done,   // led 1
+    output [31:0] out_value,
+    output [31:0] out_weight,     
     /*---------------------------UART-------------------------------*/
     input Rx_Serial,
     output Tx_Serial
@@ -81,7 +83,8 @@ module UART_MEM(
         .wr_en(wr_en0), 
         .rdata(rdata0), 
         .wdata(wdata0),
-        .reverse(reverse)
+        .num(num),
+        .out_data(out_weight)
         );
         
         
@@ -99,7 +102,8 @@ module UART_MEM(
         .wr_en(wr_en1), 
         .rdata(rdata1), 
         .wdata(wdata1),
-        .reverse(reverse)
+        .num(num),
+        .out_data(out_value)
         );
         
     /*----------------------------------MEM Control----------------------------*/

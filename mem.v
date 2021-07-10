@@ -27,37 +27,21 @@ module mem
     input [15:0] addr,
     input rd_en,
     input wr_en,
-    input reverse,
+    input [6:0] num,
+    output [31:0] out_data,
     output reg [31:0] rdata,
     input [31:0] wdata
     );
     
-    reg [31:0] memData [MEM_SIZE:1];
-    reg flag;
-    reg [5:0] i = 6'b0;
-    reg [9:0] j = 10'b1;
+    reg [31:0] memData [64:1];
 
-    always@(posedge reverse)begin
-        flag <= 1'b1;
-    end
+    assign out_data = memData[num];
+
     always@(posedge clk)begin
-        begin
+     begin
             if(wr_en) memData[addr] <= wdata;
             if(rd_en)  rdata <=  memData[addr];
-            else rdata<= 32'd0;
-            if(flag) begin
-                if(i < 6'd32)begin
-                    if(j < MEM_SIZE + 10'd1)begin
-                        memData[j][i] <= ~memData[j][i];
-                        j <= j + 10'b1;
-                    end
-                    else begin
-                        j <= 10'b1;
-                        i <= i + 6'd1;
-                    end
-                end
-                else flag <= 1'b0;
-            end 
+            else rdata<= 32'd0; 
         end
     end
 

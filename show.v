@@ -1,6 +1,6 @@
 module show(
     input clk, 
-    input [7:0] cache, 
+    input [31:0] cache, 
     output [7:1] cathodes, 
     output [3:0] AN
 );
@@ -17,7 +17,7 @@ module show(
 
     assign mux_data  =  (index == 2'd0) ? cache[3:0] : 
                         (index == 2'd1) ? cache[7:4] :
-                        (index == 2'd2) ? 4'd0 : 4'd0;
+                        (index == 2'd2) ? cache[11:8] : cache[15:12];
 
     assign AN     =     (index == 2'd0) ? 4'b1110 : 
                         (index == 2'd1) ? 4'b1101 :

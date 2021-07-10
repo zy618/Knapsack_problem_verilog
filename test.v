@@ -15,7 +15,6 @@ module test();
         reset = 1;
         clk = 1;
         #100 reset = 0;
-        #5000 $finish;
     end
     
     always #50 clk = ~clk;
